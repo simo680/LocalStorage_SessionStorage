@@ -1,16 +1,26 @@
-let data = {}
+let data = {};
+let storageType = localStorage;
+
+function selectStorage() {
+  let selectElement = document.getElementById("storageSelect");
+  if (selectElement.value === "localStorage") {
+    storageType = localStorage;
+  } else if (selectElement.value === "sessionStorage") {
+    storageType = sessionStorage;
+  }
+}
 
 function updateTable() {
   let tableBody = document.querySelector("tbody");
   tableBody.innerHTML = "";
 
-  let data = JSON.parse(localStorage.getItem("data"));
+  let data = JSON.parse(storageType.getItem("data"));
 
   if (!data || Object.keys(data).length === 0) {
     let row = tableBody.insertRow();
     let cell = row.insertCell();
     cell.colSpan = 4;
-    cell.textContent = 'emptyHeader';
+    cell.textContent = "emptyHeader";
   } else {
     Object.keys(data).forEach((key, index) => {
       let row = tableBody.insertRow();
@@ -22,8 +32,8 @@ function updateTable() {
       cell2.textContent = key;
       cell3.textContent = data[key];
 
-      let deleteButton = document.createElement('span');
-      deleteButton.textContent = 'X';
+      let deleteButton = document.createElement("span");
+      deleteButton.textContent = "X";
       deleteButton.onclick = function () {
         deleteItem(key);
       };
@@ -33,25 +43,25 @@ function updateTable() {
 }
 
 function getStorage() {
-  let currentStorage = localStorage;
+  let currentStorage = storageType;
   updateTable();
 }
 
 function saveItem() {
-    let key = document.getElementById("keyInput").value;
-    let value = document.getElementById("valueInput").value;
-    data[key] = value;
-    localStorage.setItem('data', JSON.stringify(data));
-    updateTable();
+  let key = document.getElementById("keyInput").value;
+  let value = document.getElementById("valueInput").value;
+  data[key] = value;
+  storageType.setItem("data", JSON.stringify(data));
+  updateTable();
 }
 
-function deleteItem() {
-    let confirmation = confirm("Вы уверены, что хотите удалить эту запись?");
-    if (confirmation) {
-        delete data[key];
-        localStorage.setItem('data', JSON.stringify(data));
-        updateTable();
-    }
+function deleteItem(key) {
+  let confirmation = confirm("Вы уверены, что хотите удалить эту запись?");
+  if (confirmation) {
+    delete data[key];
+    storageType.setItem("data", JSON.stringify(data));
+    updateTable();
+  }
 }
 
 function clearStorage() {
@@ -59,9 +69,7 @@ function clearStorage() {
     "Вы уверены, что хотите полностью очистить хранилище?"
   );
   if (confirmation) {
-    localStorage.clear();
+    storageType.clear();
     updateTable();
   }
 }
-
-

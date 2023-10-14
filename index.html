@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LocalStorage_SessionStorage</title>
     <link rel="stylesheet" href="style.css" />
-  </head>
+</head>
 
-  <body>
+<body onload="updateTable()">
     <h2>Выберите хранилище:</h2>
-    <select onchange="">
-      <option value="1">LocalStorage</option>
-      <option value="2">SessinStorage</option>
+    <select id="storageSelect" onchange="selectStorage()">
+        <option value="localStorage">LocalStorage</option>
+        <option value="sessionStorage">SessinStorage</option>
     </select>
 
     <h2>Ключ</h2>
-    <input type="text" id="keyInput"  onchange="getStorage()" />
+    <input type="text" id="keyInput" onchange="getStorage()" />
     <h2>Значение</h2>
-    <input type="text"  id="valueInput" onchange="getStorage()" />
-    <input type="button" value="Сохранить"  onclick="saveItem()"/>
+    <input type="text" id="valueInput" onchange="getStorage()" />
+    <input type="button" value="Сохранить" onclick="saveItem()" />
 
     <table>
-      <thead>
-        <tr>
-          <th>№</th>
-          <th>Ключ</th>
-          <th>Значение</th>
-          <th>Удалить</th>
-        </tr>
-      </thead>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Ключ</th>
+                <th>Значение</th>
+                <th>Удалить</th>
+            </tr>
+        </thead>
 
-      <tbody>
-       
-      </tbody>
+        <tbody>
+
+        </tbody>
     </table>
 
     <input type="button" value="Очистить всё" onclick="clearStorage()" />
 
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>
